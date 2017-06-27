@@ -28,8 +28,9 @@ namespace ConsoleUI
             ShowArray(array);
 
             QuickSort(array, 0, array.Length - 1);
+            //array=MergeSort(array);
 
-            Console.WriteLine("Output array: ");
+            Console.WriteLine("\nOutput array: ");
             ShowArray(array);
         }
     }
