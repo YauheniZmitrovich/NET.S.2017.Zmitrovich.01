@@ -11,6 +11,19 @@ namespace Logic
     /// </summary>
     public static class IntArrSorting
     {
+
+        #region QuickSort
+        /// <summary>
+        /// Sorts int elements in an entire one-dimensional array by Hoar's alghorithm.
+        /// </summary>
+        /// <param name="arr">
+        /// The one-dimensional int array to sort.
+        /// </param>
+        public static void QuickSort(int[] arr)
+        {
+            QuickSort(arr, 0, arr.Length - 1);
+        }
+
         /// <summary>
         /// Sorts int elements in an entire one-dimensional array by Hoar's alghorithm.
         /// </summary>
@@ -25,7 +38,10 @@ namespace Logic
         /// </param>
         public static void QuickSort(int[] arr, int left, int right)
         {
-            if (arr.Length == 0)
+            CheckInputArray(arr);
+            CheckBounds(arr, left, right);
+
+            if (arr.Length == 1)
                 return;
 
             int pivot = arr[left + (right - left) / 2];
@@ -52,40 +68,46 @@ namespace Logic
             if (j > left)
                 QuickSort(arr, left, j);
         }
+        #endregion
 
-
+        #region MergeSort
         /// <summary>
         /// Sorts int elements in an entire one-dimensional array by merger.
         /// </summary>
         /// <param name="arr">
         /// The one-dimensional int array to sort.
-        /// </param>
-        public static int[] MergeSort(int[] arr)
+        /// </param>        
+        public static void MergeSort(int[] arr)
         {
-            if (arr.Length <= 1)
-                return arr;
+            CheckInputArray(arr);
+
+            if (arr.Length == 1)
+                return;
 
             int middle = arr.Length / 2;
 
             int[] left = new int[middle];
             int[] right = new int[arr.Length - middle];
 
-            int i;
-            for (i = 0; i < middle; i++)
+
+            for (int i = 0; i < middle; i++)
             {
                 left[i] = arr[i];
             }
-            for (i = 0; i < right.Length; i++)
+            for (int i = 0; i < right.Length; i++)
             {
                 right[i] = arr[i + middle];
             }
 
-            left = MergeSort(left);
-            right = MergeSort(right);
+            MergeSort(left);
+            MergeSort(right);
 
             int[] result = Merge(left, right);
 
-            return result;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = result[i];
+            }
         }
 
         private static int[] Merge(int[] left, int[] right)
@@ -115,6 +137,27 @@ namespace Logic
             }
             return result;
         }
+        #endregion
+
+        #region CheckerMethods
+        private static void CheckBounds(int[] arr, int l, int r)
+        {
+            bool flag1 = (l < 0 || r < 0) || (l >= arr.Length || r >= arr.Length);
+            bool flag2 = l > r;
+
+            if (flag1 || flag2)
+                throw new ArgumentException();
+        }
+
+        private static void CheckInputArray(int[] arr)
+        {
+            if (arr == null)
+                throw new ArgumentNullException();
+
+            if (arr.Length == 0)
+                throw new ArgumentException();
+        }
+        #endregion
 
     }
 }
