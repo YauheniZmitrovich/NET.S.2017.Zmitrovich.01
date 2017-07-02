@@ -21,6 +21,7 @@ namespace Logic
         /// </param>
         public static void QuickSort(int[] arr)
         {
+            CheckInputArray(arr);
             QuickSort(arr, 0, arr.Length - 1);
         }
 
@@ -139,10 +140,10 @@ namespace Logic
         }
         #endregion
 
-        #region CheckerMethods
+        #region CheckingMethods
         private static void CheckBounds(int[] arr, int l, int r)
         {
-            bool flag1 = (l < 0 || r < 0) || (l >= arr.Length || r >= arr.Length);
+            bool flag1 = (l < 0 || r >= arr.Length);
             bool flag2 = l > r;
 
             if (flag1 || flag2)
